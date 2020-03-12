@@ -17,7 +17,7 @@ module.exports = {
       price: {
         type: Sequelize.FLOAT
       },
-      category_id: {
+      CategoryId: {
         type: Sequelize.INTEGER
       },
       disponible: {
