@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     price: DataTypes.FLOAT,
     CategoryId: DataTypes.INTEGER,
+    image_path: DataTypes.STRING,
     disponible: DataTypes.BOOLEAN
   }, {});
   Product.associate = function(models) {
