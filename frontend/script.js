@@ -1,9 +1,10 @@
+const mainContainer =document.querySelector('main');
 const addFunkoForm = () => {
-    document.querySelector('main')
+    mainContainer
         .innerHTML = `
     <form class="addProduct">
-        <input type="text" name="name"  placeholder="Introduce el nombre">
-        <input type="number" name="price" 
+        <input required type="text" name="name"  placeholder="Introduce el nombre">
+        <input required type="number" name="price" 
         min="0"
         step="0.01" placeholder="Introduce el precio">
         <select name="CategoryId" title="Seleccione categoría">
@@ -11,9 +12,9 @@ const addFunkoForm = () => {
         <option value="1">Marvel</option>
         <option value="2">Harry Potter</option>
         </select>
-        <input type="text" name="image_path" placeholder="Introduzca ruta de la imagen">
+        <input required type="text" name="image_path" placeholder="Introduzca ruta de la imagen">
         <label for="disponible">Disponible:</label>
-        <input type="checkbox" name="disponible" id="disponible">
+        <input required type="checkbox" name="disponible" id="disponible">
         <button type="submit">Añadir Funko</button>
     </form>
     `
@@ -32,6 +33,15 @@ const addFunkoForm = () => {
         axios.post('http://localhost:3000/products',funko)
         .then(res=>{
             console.log(res.data)
+            const message =document.createElement('h3')
+            message.innerText=res.data.message
+            mainContainer.appendChild(message)
+            // mainContainer.innerHTML+=`
+            // <h3> ${res.data.message}</h3>
+            // `
+            setTimeout(() => {
+                message.remove();
+            }, 2000);
         })
     })
 }
@@ -39,9 +49,9 @@ const renderFunkos = () => {
     axios.get('http://localhost:3000/products')
         .then(res => {
             const products = res.data
-            document.querySelector('main').innerHTML='';
+            mainContainer.innerHTML='';
             products.forEach(product => {
-                document.querySelector('main').innerHTML += `
+                mainContainer.innerHTML += `
         <div class="product">
             <h3>${product.name}</h3>
             <h5>${product.price} €</h5>
