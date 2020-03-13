@@ -43,8 +43,24 @@ const addFunkoForm = () => {
                 message.remove();
             }, 2000);
         })
+        .catch(error=>console.error(error))
     })
 }
+const renderFunko = id =>{
+    axios.get('http://localhost:3000/products/'+id)
+        .then(res => {
+            const product =res.data
+            mainContainer.innerHTML = `
+            <div class="product" onclick="renderFunko(${product})">
+                <h3>${product.name}</h3>
+                <h5>${product.price} €</h5>
+                <img src="${product.image_path}" alt="imagen">
+            </div>
+            `;
+        })
+        .catch(error=>console.error(error))
+}
+
 const renderFunkos = () => {
     axios.get('http://localhost:3000/products')
         .then(res => {
@@ -52,7 +68,7 @@ const renderFunkos = () => {
             mainContainer.innerHTML='';
             products.forEach(product => {
                 mainContainer.innerHTML += `
-        <div class="product">
+        <div class="product" onclick="renderFunko(${product.id})">
             <h3>${product.name}</h3>
             <h5>${product.price} €</h5>
             <img src="${product.image_path}" alt="imagen">
@@ -60,5 +76,6 @@ const renderFunkos = () => {
         `
             })
         })
+        .catch(error=>console.error(error))
 }
 renderFunkos();
